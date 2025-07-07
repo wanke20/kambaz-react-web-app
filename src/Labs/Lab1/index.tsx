@@ -228,6 +228,8 @@ export default function Lab1() {
           >
             Hello World!
           </button>
+          <h5 id="wd-file-upload">File Upload</h5>
+          <input type="file" id="wd-file-upload-input" />
           <h5 id="wd-radio-buttons">Radio buttons</h5>
           <label>Favorite movie genre:</label>
           <br />
@@ -316,7 +318,12 @@ export default function Lab1() {
           </a>
           to get dummy text
           <br />
-          <a href="https://github.com/wanke20/kambaz-react-web-app#" id="wd-github">Github Repository</a>
+          <a
+            href="https://github.com/wanke20/kambaz-react-web-app#"
+            id="wd-github"
+          >
+            Github Repository
+          </a>
         </form>
       </div>
     </div>
