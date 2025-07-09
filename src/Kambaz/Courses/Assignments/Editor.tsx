@@ -2,12 +2,10 @@ export default function AssignmentEditor() {
   return (
     <div id="wd-assignments-editor">
       <label htmlFor="wd-name">Assignment Name</label>
-      <input id="wd-name" value="A1 - ENV + HTML" />
+      <input id="wd-name" defaultValue="A1 - ENV + HTML" />
       <br />
       <br />
-      <textarea id="wd-description">
-        The assignment is available online Submit a link to the landing page of
-      </textarea>
+      <textarea id="wd-description" defaultValue="Input instructions" />
       <br /> <br />
       <table>
         <tr>
@@ -15,7 +13,7 @@ export default function AssignmentEditor() {
             <label htmlFor="wd-points">Points</label>
           </td>
           <td>
-            <input id="wd-points" value={100} />
+            <input id="wd-points" type="number" defaultValue={100} />
           </td>
         </tr>{" "}
         <br />
@@ -27,6 +25,7 @@ export default function AssignmentEditor() {
           <td>
             <select id="wd-group">
               <option value="ASSIGNMENTS">ASSIGNMENTS</option>
+              <option value="QUIZZES">QUIZZES</option>
             </select>
           </td>
         </tr>{" "}
@@ -38,6 +37,7 @@ export default function AssignmentEditor() {
           <td>
             <select id="wd-display-grade-as">
               <option value="PERCENTAGE">Percentage</option>
+              <option value="POINTS">Points</option>
             </select>
           </td>
         </tr>
@@ -49,6 +49,7 @@ export default function AssignmentEditor() {
           <td>
             <select id="wd-submission-type">
               <option value="ONLINE">Online</option>
+              <option value="OTHER">Other</option>
             </select>
           </td>
         </tr>
@@ -90,7 +91,7 @@ export default function AssignmentEditor() {
           <td>
             <label htmlFor="wd-assign-to">Assign to: </label>
             <br />
-            <input id="wd-points" value={"Everyone"} />
+            <input id="wd-points" defaultValue="Everyone" />
           </td>
         </tr>
         <br />
@@ -98,7 +99,7 @@ export default function AssignmentEditor() {
           <td></td>
           <td>
             <label htmlFor="wd-due-date"> Due: </label> <br />
-            <input type="date" value="2024-05-13" id="wd-due-date" />
+            <input type="date" defaultValue="2024-05-13" id="wd-due-date" />
           </td>
         </tr>
         <br />
@@ -107,12 +108,12 @@ export default function AssignmentEditor() {
           <td>
             <label>Available from</label>
             <br />
-            <input type="date" value="2024-05-01" id="wd-available-from" />
+            <input type="date" defaultValue="2024-05-01" id="wd-available-from" />
           </td>
           <td>
             <label>Until</label>
             <br />
-            <input type="date" value="2024-05-20" id="wd-available-from" />
+            <input type="date" defaultValue="2024-05-20" id="wd-available-from" />
           </td>
         </tr>
       </table>

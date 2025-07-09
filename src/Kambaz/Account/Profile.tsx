@@ -6,6 +6,7 @@ export default function Profile() {
       <input
         defaultValue="alice"
         placeholder="username"
+        type="text"
         className="wd-username"
       />
       <br />
@@ -16,11 +17,17 @@ export default function Profile() {
         className="wd-password"
       />
       <br />
-      <input defaultValue="Alice" placeholder="First Name" id="wd-firstname" />
+      <input
+        defaultValue="Alice"
+        placeholder="First Name"
+        type="text"
+        id="wd-firstname"
+      />
       <br />
       <input
         defaultValue="Wonderland"
         placeholder="Last Name"
+        type="text"
         id="wd-lastname"
       />
       <br />
