@@ -133,7 +133,6 @@ The Kanbas application should include a link to navigate back to the landing pag
                 type="date"
                 id="wd-available-from"
                 className="position-relative me-10"
-                // style={{ width: "fit-content" }}
               />
             </div>
             <div className="w-50">
