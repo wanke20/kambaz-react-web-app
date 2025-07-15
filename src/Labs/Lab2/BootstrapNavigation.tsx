@@ -7,7 +7,7 @@ export default function BootstrapNavigation() {
         <h2>Tabs</h2>
         <Nav variant="tabs">
           <Nav.Item>
-            <Nav.Link href="#/Labs/Lab2/Active">Active</Nav.Link>
+            <Nav.Link href="#/Labs/Lab2/Active" active>Active</Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link href="#/Labs/Lab2/Link1">Link 1</Nav.Link>

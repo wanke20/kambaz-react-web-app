@@ -1,5 +1,6 @@
 import { FaPlus } from "react-icons/fa6";
 import GreenCheckmark from "./GreenCheckmark";
+import { MdDoNotDisturbAlt } from "react-icons/md";
 import { Button, Dropdown } from "react-bootstrap";
 export default function ModulesControls() {
   return (
@@ -18,9 +19,6 @@ export default function ModulesControls() {
           <GreenCheckmark /> Publish All
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          <Dropdown.Item id="wd-publish-all">
-            <GreenCheckmark /> Publish All
-          </Dropdown.Item>
           <Dropdown.Item id="wd-publish-all-modules-and-items">
             <GreenCheckmark /> Publish all modules and items
           </Dropdown.Item>
@@ -30,9 +28,11 @@ export default function ModulesControls() {
           {/* Create two more items with IDs wd-unpublish-all-modules-and-items and wd-unpublish-modules-only with
              labels Unpublish all modules and items and Unpublish modules only */}
           <Dropdown.Item id="wd-unpublish-all-modules-and-items">
+            <MdDoNotDisturbAlt className="fs-5 me-2 mb-1" />
             Unpublish all modules and items
           </Dropdown.Item>
           <Dropdown.Item id="wd-unpublish-modules-only">
+            <MdDoNotDisturbAlt className="fs-5 me-2 mb-1" />
             Unpublish modules only
           </Dropdown.Item>
         </Dropdown.Menu>

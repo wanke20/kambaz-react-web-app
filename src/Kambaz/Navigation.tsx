@@ -17,16 +17,16 @@ export default function KambazNavigation() {
         target="_blank"
         action
         href="https://www.northeastern.edu/"
-        className="bg-black border-0 text-center"
+        className="bg-black border-0 text-center text-white"
       >
         <img src="/images/NEU.png" width="75px" />
       </ListGroup.Item>
       <ListGroup.Item
         to="/Kambaz/Account"
         as={Link}
-        className="text-center border-0 bg-white text-danger"
+        className="text-center border-0 bg-black text-white"
       >
-        <FaRegCircleUser className="fs-1 text text-danger" />
+        <FaRegCircleUser className="fs-1 text text-white" />
         <br />
         Account
       </ListGroup.Item>
@@ -34,7 +34,7 @@ export default function KambazNavigation() {
         to="/Kambaz/Dashboard"
         as={Link}
         className="text-center border-0
-                  bg-black text-danger"
+                  bg-white text-danger"
       >
         <AiOutlineDashboard className="fs-1 text-danger" />
         <br />
@@ -82,7 +82,8 @@ export default function KambazNavigation() {
       </ListGroup.Item>
       <ListGroup.Item
         to="/Kambaz/Dashboard"
-        as={Link} className="text-white 
+        as={Link}
+        className="text-white 
                   bg-black text-center border-0"
       >
         <LiaCogSolid className="fs-1 text-danger" />

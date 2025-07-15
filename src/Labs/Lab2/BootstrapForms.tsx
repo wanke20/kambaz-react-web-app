@@ -4,7 +4,6 @@ import {
   FormControl,
   FormSelect,
   Form,
-  //   FormRange,
   InputGroup,
   Col,
   Row,
@@ -67,7 +66,7 @@ export default function BootstrapForms() {
         <h3>Range</h3>
         <FormGroup controlId="wd-range1">
           <FormLabel>Example range</FormLabel>
-          {/* <FormRange min="0" max="5" step="0.5" /> */}
+          <Form.Range min="0" max="5" step="0.5" />
         </FormGroup>
       </div>
       <div id="wd-css-styling-addons">
@@ -115,8 +114,7 @@ export default function BootstrapForms() {
         <Form>
           <Form.Group as={Row} className="mb-3">
             <Form.Label column sm={2}>
-              {" "}
-              Email{" "}
+              Email
             </Form.Label>
             <Col sm={10}>
               <Form.Control type="email" placeholder="Email" />
@@ -124,8 +122,7 @@ export default function BootstrapForms() {
           </Form.Group>
           <Form.Group as={Row} className="mb-3">
             <Form.Label column sm={2}>
-              {" "}
-              Password{" "}
+              Password
             </Form.Label>
             <Col sm={10}>
               <Form.Control type="password" placeholder="Password" />
@@ -134,7 +131,7 @@ export default function BootstrapForms() {
           <fieldset>
             <Form.Group as={Row} className="mb-3">
               <Form.Label as="legend" column sm={2}>
-                Radios{" "}
+                Radios
               </Form.Label>
               <Col sm={10}>
                 <Form.Check

@@ -3,52 +3,53 @@ import { Form } from "react-bootstrap";
 export default function Profile() {
   return (
     <div id="wd-profile-screen">
-      <h3>Profile</h3>
+      <h1>Profile</h1>
       <Form.Control
-        defaultValue="alice"
+        id="wd-username"
         placeholder="username"
-        type="text"
-        className="mb-2 wd-username"
+        defaultValue="alice"
+        className="mb-2"
       />
       <Form.Control
-        defaultValue="123"
+        id="wd-password"
         placeholder="password"
+        defaultValue="123"
         type="password"
-        className="mb-2 wd-password"
+        className="mb-2"
       />
       <Form.Control
+        id="wd-firstname"
         defaultValue="Alice"
         placeholder="First Name"
         type="text"
-        id="wd-firstname"
         className="mb-2"
       />
       <Form.Control
+        id="wd-lastname"
         defaultValue="Wonderland"
         placeholder="Last Name"
         type="text"
-        id="wd-lastname"
         className="mb-2"
       />
       <Form.Control
+        id="wd-dob"
         defaultValue="2000-01-01"
         type="date"
-        id="wd-dob"
         className="mb-2"
       />
       <Form.Control
+        id="wd-email"
         defaultValue="alice@wonderland"
         type="email"
-        id="wd-email"
         className="mb-2"
       />
-      <Form.Select defaultValue="FACULTY" id="wd-role" className="mb-2">
+      <Form.Select id="wd-role" defaultValue="FACULTY" className="mb-2">
         <option value="USER">User</option>
         <option value="ADMIN">Admin</option>
         <option value="FACULTY">Faculty</option>
         <option value="STUDENT">Student</option>
       </Form.Select>
-      <Link to="/Kambaz/Account/Signin" className="btn btn-danger w-100">
+      <Link id="wd-signout-btn" to="/Kambaz/Account/Signin" className="btn btn-danger w-100">
         Sign out
       </Link>
     </div>
