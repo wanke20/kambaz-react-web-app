@@ -4,8 +4,12 @@ import { GiNotebook } from "react-icons/gi";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { FaCaretDown } from "react-icons/fa";
 import AssignmentControlButtons from "./AssignmentsControlButtons";
+import { Link, useParams } from "react-router";
+import * as db from "../../Database";
 
 export default function Assignments(): JSX.Element {
+  const { cid } = useParams();
+  const assignments = db.assignments;
   return (
     <div id="wd-assignments">
       <Row className="mb-4 w-100">
@@ -45,85 +49,39 @@ export default function Assignments(): JSX.Element {
               <IoEllipsisVertical className="fs-3" />
             </div>
           </div>
-          <ListGroup className="wd-assignments rounded rounded-0">
-            <ListGroup.Item className="wd-assignment d-flex p-3 ps-1 align-items-center justify-content-between">
-              <div className="d-flex align-items-center">
-                <BsGripVertical className="fs-3" />
-                <GiNotebook className="fs-4 text-success me-2" />
-                <div className="wd-assignment-details">
-                  <a
-                    href="#/Kambaz/Courses/1234/Assignments/123"
-                    className="wd-assignment-link text-black fs-5 text-decoration-none"
-                  >
-                    A1
-                  </a>
-                  <div>
-                    <span className="mb-1 fs-6 text-danger">
-                      Multiple Modules
-                    </span>{" "}
-                    <span className="mb-1 fs-6">
-                      | <b>Not available until</b> May 6 at 12:00am |
-                    </span>
+          <ListGroup className="">
+            {assignments
+              .filter((assignment: any) => assignment.course === cid)
+              .map((assignment: any) => (
+                <ListGroup.Item className="wd-assignment d-flex p-3 ps-1 align-items-center justify-content-between">
+                  <div className="d-flex align-items-center">
+                    <BsGripVertical className="fs-3" />
+                    <GiNotebook className="fs-4 text-success me-2" />
+                    <div className="wd-assignment-details">
+                      <Link
+                        to={`/Kambaz/Courses/${cid}/Assignments/${assignment._id}`}
+                        className="wd-assignment-link text-black fs-5 text-decoration-none"
+                      >
+                        {assignment.title}
+                      </Link>
+                      <div>
+                        <span className="mb-1 fs-6 text-danger">
+                          Multiple Modules
+                        </span>{" "}
+                        <span className="mb-1 fs-6">
+                          | <b>Not available until</b>{" "}
+                          {assignment.availableDate} |
+                        </span>
+                      </div>
+                      <p className="mb-0 fs-6">
+                        <b>Due</b> {assignment.dueDate} | {assignment.points}{" "}
+                        points
+                      </p>
+                    </div>
                   </div>
-                  <p className="mb-0 fs-6">
-                    <b>Due</b> May 13 at 11:59pm | 100 pts
-                  </p>
-                </div>
-              </div>
-              <AssignmentControlButtons />
-            </ListGroup.Item>
-            <ListGroup.Item className="wd-assignment d-flex p-3 ps-1 align-items-center justify-content-between">
-              <div className="d-flex align-items-center">
-                <BsGripVertical className="fs-3" />
-                <GiNotebook className="fs-4 text-success me-2" />
-                <div className="wd-assignment-details">
-                  <a
-                    href="#/Kambaz/Courses/1234/Assignments/123"
-                    className="wd-assignment-link text-black fs-5 text-decoration-none"
-                  >
-                    A2
-                  </a>
-                  <div>
-                    <span className="mb-1 fs-6 text-danger">
-                      Multiple Modules
-                    </span>{" "}
-                    <span className="mb-1 fs-6">
-                      | <b>Not available until</b> May 13 at 12:00am |
-                    </span>
-                  </div>
-                  <p className="mb-0 fs-6">
-                    <b>Due</b> May 20 at 11:59pm | 100 pts
-                  </p>
-                </div>
-              </div>
-              <AssignmentControlButtons />
-            </ListGroup.Item>
-            <ListGroup.Item className="wd-assignment d-flex p-3 ps-1 align-items-center justify-content-between">
-              <div className="d-flex align-items-center">
-                <BsGripVertical className="fs-3" />
-                <GiNotebook className="fs-4 text-success me-2" />
-                <div className="wd-assignment-details">
-                  <a
-                    href="#/Kambaz/Courses/1234/Assignments/123"
-                    className="wd-assignment-link text-black fs-5 text-decoration-none"
-                  >
-                    A3
-                  </a>
-                  <div>
-                    <span className="mb-1 fs-6 text-danger">
-                      Multiple Modules
-                    </span>{" "}
-                    <span className="mb-1 fs-6">
-                      | <b>Not available until</b> May 20 at 12:00am |
-                    </span>
-                  </div>
-                  <p className="mb-0 fs-6">
-                    <b>Due</b> May 27 at 11:59pm | 100 pts
-                  </p>
-                </div>
-              </div>
-              <AssignmentControlButtons />
-            </ListGroup.Item>
+                  <AssignmentControlButtons />
+                </ListGroup.Item>
+              ))}
           </ListGroup>
         </ListGroup.Item>
       </ListGroup>

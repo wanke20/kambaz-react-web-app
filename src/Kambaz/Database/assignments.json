@@ -1,0 +1,83 @@
+[
+  {
+    "_id": "A101",
+    "title": "Propulsion Assignment",
+    "description": "Analyze propulsion systems and submit a report.",
+    "points": 100,
+    "dueDate": "May 13 at 11:59pm",
+    "availableDate": "May 6 at 12:00am",
+    "course": "RS101"
+  },
+  {
+    "_id": "A102",
+    "title": "Combustion Analysis",
+    "description": "Perform combustion analysis for rocket engines.",
+    "points": 80,
+    "dueDate": "May 20 at 11:59pm",
+    "availableDate": "May 13 at 12:00am",
+    "course": "RS101"
+  },
+  {
+    "_id": "A103",
+    "title": "Nozzle Design Project",
+    "description": "Design and simulate a rocket nozzle.",
+    "points": 120,
+    "dueDate": "May 27 at 11:59pm",
+    "availableDate": "May 20 at 12:00am",
+    "course": "RS101"
+  },
+  {
+    "_id": "A201",
+    "title": "Aerodynamics Quiz",
+    "description": "Quiz on basic aerodynamics concepts.",
+    "points": 50,
+    "dueDate": "June 13 at 11:59pm",
+    "availableDate": "June 6 at 12:00am",
+    "course": "RS102"
+  },
+  {
+    "_id": "A202",
+    "title": "Flow Analysis",
+    "description": "Analyze fluid flow in aerospace applications.",
+    "points": 90,
+    "dueDate": "June 20 at 11:59pm",
+    "availableDate": "May 13 at 12:00am",
+    "course": "RS102"
+  },
+  {
+    "_id": "A203",
+    "title": "Heating Analysis",
+    "description": "Evaluate heating effects on spacecraft surfaces.",
+    "points": 85,
+    "dueDate": "June 27 at 11:59pm",
+    "availableDate": "June 20 at 12:00am",
+    "course": "RS102"
+  },
+  {
+    "_id": "A301",
+    "title": "Structural Design Task",
+    "description": "Complete a structural design for a satellite.",
+    "points": 110,
+    "dueDate": "July 15 at 11:59pm",
+    "availableDate": "July 8 at 12:00am",
+    "course": "RS103"
+  },
+  {
+    "_id": "A302",
+    "title": "Orbital Calculations",
+    "description": "Calculate orbital parameters for a mission.",
+    "points": 95,
+    "dueDate": "July 22 at 11:59pm",
+    "availableDate": "July 15 at 12:00am",
+    "course": "RS103"
+  },
+  {
+    "_id": "A303",
+    "title": "Systems Engineering Exam",
+    "description": "Exam covering systems engineering principles.",
+    "points": 130,
+    "dueDate": "July 29 at 11:59pm",
+    "availableDate": "July 22 at 12:00am",
+    "course": "RS103"
+  }
+]
