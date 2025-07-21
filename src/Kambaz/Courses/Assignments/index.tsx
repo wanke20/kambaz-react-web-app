@@ -70,12 +70,31 @@ export default function Assignments(): JSX.Element {
                         </span>{" "}
                         <span className="mb-1 fs-6">
                           | <b>Not available until</b>{" "}
-                          {assignment.availableDate} |
+                          {new Date(assignment.availableDate).toLocaleString(
+                            "en-US",
+                            {
+                              month: "short",
+                              day: "numeric",
+                              year: "numeric",
+                              hour: "2-digit",
+                              minute: "2-digit",
+                              hour12: true,
+                            }
+                          )}{" "}
+                          |
                         </span>
                       </div>
                       <p className="mb-0 fs-6">
-                        <b>Due</b> {assignment.dueDate} | {assignment.points}{" "}
-                        points
+                        <b>Due</b>{" "}
+                        {new Date(assignment.dueDate).toLocaleString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          hour12: true,
+                        })}{" "}
+                        | {assignment.points} points
                       </p>
                     </div>
                   </div>

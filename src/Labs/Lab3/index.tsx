@@ -31,7 +31,6 @@ import Add from "./Add";
 import Square from "./Square";
 import Highlight from "./Highlight";
 import PathParameters from "./PathParameters";
-import AddPathParameters from "./AddPathParameters";
 // import { Routes, Route, useLocation } from "react-router-dom";
 
 export default function Lab3() {
@@ -79,10 +78,6 @@ export default function Lab3() {
         voluptates.
       </Highlight>
       <PathParameters />
-      <AddPathParameters />
-      {/* <Routes location={location}>
-        <Route path="add/:a/:b" element={<AddPathParameters />} />
-      </Routes> */}
     </Container>
   );
 }

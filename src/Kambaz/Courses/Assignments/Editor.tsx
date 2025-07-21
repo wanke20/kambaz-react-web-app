@@ -1,28 +1,27 @@
-import { Form, Row, Col, Button } from "react-bootstrap";
+import { Form, Row, Col } from "react-bootstrap";
+import { Link, useParams } from "react-router";
+import * as db from "../../Database";
 
 export default function AssignmentEditor() {
+  const { cid, aid } = useParams();
+  const assignment = db.assignments.find(
+    (a: any) => a._id === aid && a.course === cid
+  );
+  if (!assignment) {
+    return <div className="p-4">Assignment not found.</div>;
+  }
+
   return (
     <div id="wd-assignments-editor" className="p-4">
       <Form.Group className="mb-3" controlId="wd-name">
         <Form.Label>Assignment Name</Form.Label>
-        <Form.Control type="text" defaultValue="A1" />
+        <Form.Control type="text" value={assignment.title} />
       </Form.Group>
       <Form.Group className="mb-4" controlId="wd-description">
         <Form.Control
           as="textarea"
-          rows={12}
-          defaultValue="The assignment is available online
-
-Submit a link to the landing page of your Web application running on Netlify.
-
-The landing page should include the following:
-
-• Your full name and section
-• Links to each of the lab assignments
-• Link to the Kanbas application
-• Links to all relevant source code repositories
-
-The Kanbas application should include a link to navigate back to the landing page."
+          rows={6}
+          value={assignment.description}
         />
       </Form.Group>
       <Row className="mb-3 align-items-center">
@@ -35,7 +34,11 @@ The Kanbas application should include a link to navigate back to the landing pag
           </Form.Label>
         </Col>
         <Col xs={4}>
-          <Form.Control type="number" id="wd-points" defaultValue={100} />
+          <Form.Control
+            type="number"
+            id="wd-points"
+            value={assignment.points}
+          />
         </Col>
       </Row>
       <Row className="mb-3 align-items-center">
@@ -106,41 +109,68 @@ The Kanbas application should include a link to navigate back to the landing pag
         <Col xs={2}>
           <Form.Label className="d-flex justify-content-end">Assign</Form.Label>
         </Col>
-        <Col xs={4} className="border border-2 border-gray rounded p-3">
+        <Col xs={4} className="border border-2 border-gray rounded px-4 py-3">
           <Row>
-            <Form.Label htmlFor="wd-assign-to">Assign to:</Form.Label>
+            <Form.Label htmlFor="wd-assign-to" className="g-0">
+              Assign to:
+            </Form.Label>
             <Form.Control
               type="text"
               id="wd-assign-to"
-              defaultValue="Everyone"
+              value="Everyone"
             />
           </Row>
           <Row className="mt-2">
-            <Form.Label htmlFor="wd-due-date">Due:</Form.Label>
+            <Form.Label htmlFor="wd-due-date" className="g-0">
+              Due:
+            </Form.Label>
             <br />
             <Form.Control
-              type="date"
+              type="datetime"
               id="wd-due-date"
+              value={new Date(assignment.dueDate).toLocaleString(
+                "en-US",
+                {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: true,
+                }
+              )}
             />
           </Row>
           <Row className="mt-2">
-            <div className="w-50">
+            <div className="w-50 g-0">
               <Form.Label htmlFor="wd-available-from">
                 Available from
               </Form.Label>
               <br />
               <Form.Control
-                type="date"
+                type="datetime"
                 id="wd-available-from"
-                className="position-relative me-10"
+                value={new Date(assignment.availableDate).toLocaleString(
+                  "en-US",
+                  {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    hour12: true,
+                  }
+                )}
+                className="position-relative"
               />
             </div>
-            <div className="w-50">
+            <div className="w-50 g-0">
               <Form.Label htmlFor="wd-available-until">Until</Form.Label>
               <br />
               <Form.Control
-                type="date"
-                id="wd-available-until"
+                type="datetime"
+                id="wd-available-from"
+                className="position-relative"
               />
             </div>
           </Row>
@@ -149,10 +179,18 @@ The Kanbas application should include a link to navigate back to the landing pag
       <hr />
       <Row>
         <Col xs={{ span: 4, offset: 2 }} className="d-flex justify-content-end">
-          <Button variant="secondary" className="me-2">
+          <Link
+            to={`/Kambaz/Courses/${cid}/Assignments`}
+            className="btn btn-secondary me-2"
+          >
             Cancel
-          </Button>
-          <Button variant="danger">Save</Button>
+          </Link>
+          <Link
+            to={`/Kambaz/Courses/${cid}/Assignments`}
+            className="btn btn-danger"
+          >
+            Save
+          </Link>
         </Col>
       </Row>
     </div>
