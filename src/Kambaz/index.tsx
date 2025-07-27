@@ -6,6 +6,9 @@ import * as db from "./Database";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./styles.css";
+import ProtectedRoute from "./Account/ProtectedRoute";
+import Account from "./Account";
+// import AssignmentEditor from "./Courses/Assignments/Editor";
 export default function Kambaz() {
   const [courses, setCourses] = useState<any[]>(db.courses);
   const [course, setCourse] = useState<any>({
@@ -39,24 +42,31 @@ export default function Kambaz() {
       <div className="wd-main-content-offset p-3">
         <Routes>
           <Route path="/" element={<Navigate to="Dashboard" />} />
-          <Route path="Account" element={<h1>Account</h1>} />
+          <Route path="Account/*" element={<Account />} />
           <Route
             path="Dashboard"
             element={
-              <Dashboard
-                courses={courses}
-                course={course}
-                setCourse={setCourse}
-                addNewCourse={addNewCourse}
-                deleteCourse={deleteCourse}
-                updateCourse={updateCourse}
-              />
+              <ProtectedRoute>
+                <Dashboard
+                  courses={courses}
+                  course={course}
+                  setCourse={setCourse}
+                  addNewCourse={addNewCourse}
+                  deleteCourse={deleteCourse}
+                  updateCourse={updateCourse}
+                />
+              </ProtectedRoute>
             }
           />
           <Route
             path="Courses/:cid/*"
-            element={<Courses courses={courses} />}
+            element={
+              <ProtectedRoute>
+                <Courses courses={courses} />
+              </ProtectedRoute>
+            }
           />
+          {/* <Route path="Assignments/:aid" element={<AssignmentEditor />} /> */}
         </Routes>
       </div>
     </div>
