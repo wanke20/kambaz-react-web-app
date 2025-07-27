@@ -2,15 +2,17 @@ import KambazNavigation from "./Navigation";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from "./Dashboard";
 import Courses from "./Courses";
-import * as db from "./Database";
 import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import "./styles.css";
 import ProtectedRoute from "./Account/ProtectedRoute";
 import Account from "./Account";
-// import AssignmentEditor from "./Courses/Assignments/Editor";
+import { addCourse, updateCourse, deleteCourse } from "./Courses/reducer";
+import { useSelector, useDispatch } from "react-redux";
+
 export default function Kambaz() {
-  const [courses, setCourses] = useState<any[]>(db.courses);
+  const dispatch = useDispatch();
+  const { courses } = useSelector((state: any) => state.courseReducer);
+
   const [course, setCourse] = useState<any>({
     _id: "1234",
     name: "New Course",
@@ -18,24 +20,10 @@ export default function Kambaz() {
     startDate: "2023-09-10",
     endDate: "2023-12-15",
     description: "New Description",
+    department: "CS",
+    credits: 4,
   });
-  const addNewCourse = () => {
-    setCourses([...courses, { ...course, _id: uuidv4() }]);
-  };
-  const deleteCourse = (courseId: any) => {
-    setCourses(courses.filter((course) => course._id !== courseId));
-  };
-  const updateCourse = () => {
-    setCourses(
-      courses.map((c) => {
-        if (c._id === course._id) {
-          return course;
-        } else {
-          return c;
-        }
-      })
-    );
-  };
+
   return (
     <div id="wd-kambaz">
       <KambazNavigation />
@@ -51,9 +39,16 @@ export default function Kambaz() {
                   courses={courses}
                   course={course}
                   setCourse={setCourse}
-                  addNewCourse={addNewCourse}
-                  deleteCourse={deleteCourse}
-                  updateCourse={updateCourse}
+                  addCourse={() => {
+                    dispatch(addCourse(course));
+                    setCourse(course);
+                  }}
+                  deleteCourse={(courseId) => {
+                    dispatch(deleteCourse(courseId));
+                  }}
+                  updateCourse={() => {
+                    dispatch(updateCourse(course));
+                  }}
                 />
               </ProtectedRoute>
             }
@@ -66,7 +61,6 @@ export default function Kambaz() {
               </ProtectedRoute>
             }
           />
-          {/* <Route path="Assignments/:aid" element={<AssignmentEditor />} /> */}
         </Routes>
       </div>
     </div>
