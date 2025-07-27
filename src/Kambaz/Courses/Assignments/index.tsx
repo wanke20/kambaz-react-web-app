@@ -2,7 +2,7 @@ import { ListGroup, Form, Row, Col, Button } from "react-bootstrap";
 import { BsGripVertical } from "react-icons/bs";
 import { GiNotebook } from "react-icons/gi";
 import { IoEllipsisVertical } from "react-icons/io5";
-import { FaCaretDown, FaCheckCircle, FaCircle, FaPlus, FaTrash } from "react-icons/fa";
+import { FaCaretDown, FaCheckCircle, FaPlus, FaTrash } from "react-icons/fa";
 import { useParams } from "react-router";
 import { useState } from "react";
 import AssignmentEditor from "./Editor";
