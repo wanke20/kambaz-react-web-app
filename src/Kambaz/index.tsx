@@ -8,6 +8,7 @@ import ProtectedRoute from "./Account/ProtectedRoute";
 import Account from "./Account";
 import { addCourse, updateCourse, deleteCourse } from "./Courses/reducer";
 import { useSelector, useDispatch } from "react-redux";
+import PrivateCourseRoute from "./PrivateCourseRoute";
 
 export default function Kambaz() {
   const dispatch = useDispatch();
@@ -57,7 +58,9 @@ export default function Kambaz() {
             path="Courses/:cid/*"
             element={
               <ProtectedRoute>
-                <Courses courses={courses} />
+                <PrivateCourseRoute>
+                  <Courses courses={courses} />
+                </PrivateCourseRoute>
               </ProtectedRoute>
             }
           />
