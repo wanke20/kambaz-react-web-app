@@ -3,10 +3,8 @@ import { BsGripVertical } from "react-icons/bs";
 import { GiNotebook } from "react-icons/gi";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { FaCaretDown, FaCheckCircle, FaPlus, FaTrash } from "react-icons/fa";
-import { useParams } from "react-router";
-import { useState } from "react";
-import AssignmentEditor from "./Editor";
-import { addAssignment, updateAssignment, deleteAssignment } from "./reducer";
+import { Link, useParams } from "react-router";
+import { deleteAssignment } from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
 
 export default function Assignments() {
@@ -14,53 +12,44 @@ export default function Assignments() {
   const dispatch = useDispatch();
   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [points, setPoints] = useState(100);
-  const [dueDate, setDueDate] = useState("");
-  const [availableDate, setAvailableDate] = useState("");
-  const [availableUntil, setAvailableUntil] = useState("");
+  // const [editingId, setEditingId] = useState<string | null>(null);
 
-  const [show, setShow] = useState(false);
-  const [editing, setEditing] = useState(false);
-  const [editingId, setEditingId] = useState<string | null>(null);
+  // const handleClose = () => {
+  //   setShow(false);
+  //   setTitle("");
+  //   setEditing(false);
+  //   setEditingId(null);
+  // };
 
-  const handleClose = () => {
-    setShow(false);
-    setTitle("");
-    setEditing(false);
-    setEditingId(null);
-  };
+  // const handleSaveAssignment = () => {
+  //   const newAssignment = {
+  //     title: title,
+  //     description: description,
+  //     points: points,
+  //     dueDate: dueDate,
+  //     availableDate: availableDate,
+  //     availableUntil: availableUntil,
+  //     course: cid,
+  //   };
 
-  const handleSaveAssignment = () => {
-    const newAssignment = {
-      title: title,
-      description: description,
-      points: points,
-      dueDate: dueDate,
-      availableDate: availableDate,
-      availableUntil: availableUntil,
-      course: cid,
-    };
+  //   if (editing && editingId) {
+  //     const existingAssignment = assignments.find(
+  //       (a: any) => a._id === editingId
+  //     );
+  //     if (existingAssignment) {
+  //       dispatch(
+  //         updateAssignment({
+  //           ...existingAssignment,
+  //           ...newAssignment,
+  //         })
+  //       );
+  //     }
+  //   } else {
+  //     dispatch(addAssignment(newAssignment));
+  //   }
 
-    if (editing && editingId) {
-      const existingAssignment = assignments.find(
-        (a: any) => a._id === editingId
-      );
-      if (existingAssignment) {
-        dispatch(
-          updateAssignment({
-            ...existingAssignment,
-            ...newAssignment,
-          })
-        );
-      }
-    } else {
-      dispatch(addAssignment(newAssignment));
-    }
-
-    handleClose();
-  };
+  //   handleClose();
+  // };
 
   return (
     <div id="wd-assignments">
@@ -80,32 +69,34 @@ export default function Assignments() {
           >
             + Group
           </button>
-          <Button
-            variant="danger"
-            onClick={() => {
-              setEditing(false);
-              setTitle("");
-              setDescription("");
-              setDueDate(new Date().toISOString().slice(0, 16));
-              setAvailableDate(new Date().toISOString().slice(0, 16));
-              setPoints(100);
-              setAvailableUntil(new Date().toISOString().slice(0, 16));
-              setShow(true);
-            }}
-          >
-            <FaPlus
-              className="position-relative me-2"
-              style={{ bottom: "1px" }}
-            />
-            Assignment
-          </Button>
+          <Link to={`/Kambaz/Courses/${cid}/Assignments/new`} style={{ textDecoration: "none" }}>
+            <Button
+              variant="danger"
+              // onClick={() => {
+                // setEditing(false);
+                // setTitle("");
+                // setDescription("");
+                // setDueDate(new Date().toISOString().slice(0, 16));
+                // setAvailableDate(new Date().toISOString().slice(0, 16));
+                // setPoints(100);
+                // setAvailableUntil(new Date().toISOString().slice(0, 16));
+                // setShow(true);
+              // }}
+            >
+              <FaPlus
+                className="position-relative me-2"
+                style={{ bottom: "1px" }}
+              />
+              Assignment
+            </Button>
+          </Link>
         </Col>
       </Row>
 
-      <AssignmentEditor
+      {/* <AssignmentEditor
         show={show}
         handleClose={handleClose}
-        dialogTitle={editing ? "Edit Assignment" : "Add Assignment"}
+        editing={editing}
         title={title}
         setTitle={setTitle}
         description={description}
@@ -119,7 +110,7 @@ export default function Assignments() {
         availableUntil={availableUntil}
         setAvailableUntil={setAvailableUntil}
         addAssignment={handleSaveAssignment}
-      />
+      /> */}
 
       <ListGroup id="wd-assignment-lists" className="rounded-0">
         <ListGroup.Item className="wd-assignment-list p-0 mb-5 fs-5 border-gray">
@@ -150,27 +141,29 @@ export default function Assignments() {
                     <BsGripVertical className="fs-3" />
                     <GiNotebook className="fs-4 text-success me-2" />
                     <div className="wd-assignment-details">
-                      <Button
+                      <Link
+                        to={`/Kambaz/Courses/${cid}/Assignments/${assignment._id}`}
+                        className="wd-assignment-link text-black fs-5 text-decoration-none"
+                      >
+                        {assignment.title}
+                      </Link>
+                      {/* <Button
                         variant="link"
                         className="p-0 m-0 text-decoration-none fs-5 text-black text-start"
                         onClick={() => {
                           setEditing(true);
-                          setEditingId(assignment._id);
-                          setTitle(assignment.title);
-                          setDescription(assignment.description);
-                          setAvailableDate(assignment.availableDate);
-                          setDueDate(assignment.dueDate);
-                          setPoints(assignment.points);
-                          setAvailableUntil(assignment.availableUntil);
-                          setShow(true);
-                          console.log(
-                            availableUntil,
-                            assignment.availableUntil
-                          );
+                          // setEditingId(assignment._id);
+                          // setTitle(assignment.title);
+                          // setDescription(assignment.description);
+                          // setAvailableDate(assignment.availableDate);
+                          // setDueDate(assignment.dueDate);
+                          // setPoints(assignment.points);
+                          // setAvailableUntil(assignment.availableUntil);
+                          // setShow(true);
                         }}
                       >
                         {assignment.title}
-                      </Button>
+                      </Button> */}
 
                       <div>
                         <span className="mb-1 fs-6 text-danger">

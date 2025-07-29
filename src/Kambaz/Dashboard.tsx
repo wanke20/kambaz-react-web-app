@@ -106,46 +106,49 @@ export default function Dashboard({
                     to={`/Kambaz/Courses/${course._id}/Home`}
                     className="wd-dashboard-course-link text-decoration-none text-dark"
                   >
-                    <Card.Img
-                      src="/images/reactjs.jpg"
-                      variant="top"
-                      width="100%"
-                      height={160}
-                    />
+                    <div className="position-relative d-inline-block">
+                      <Card.Img
+                        src="/images/reactjs.jpg"
+                        variant="top"
+                        width="100%"
+                        height={160}
+                      />
+                      <button
+                        className={`btn ${
+                          isEnrolled(course._id) ? "btn-danger" : "btn-success"
+                        }`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          if (isEnrolled(course._id)) {
+                            dispatch(
+                              unenrollCourse({
+                                userId: currentUser._id,
+                                courseId: course._id,
+                              })
+                            );
+                          } else {
+                            dispatch(
+                              enrollCourse({
+                                userId: currentUser._id,
+                                courseId: course._id,
+                              })
+                            );
+                          }
+                        }}
+                        style={{
+                          position: "absolute",
+                          top: "8px",
+                          left: "8px",
+                          zIndex: 1,
+                        }}
+                      >
+                        {isEnrolled(course._id) ? "Unenroll" : "Enroll"}
+                      </button>
+                    </div>
                     <Card.Body className="card-body">
-                      <div className="d-flex align-items-center justify-content-between">
-                        <Card.Title className="wd-dashboard-course-title text-nowrap overflow-hidden">
-                          {course.name}
-                        </Card.Title>
-                        <button
-                          className={`btn ${
-                            isEnrolled(course._id)
-                              ? "btn-danger"
-                              : "btn-success"
-                          }`}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            if (isEnrolled(course._id)) {
-                              dispatch(
-                                unenrollCourse({
-                                  userId: currentUser._id,
-                                  courseId: course._id,
-                                })
-                              );
-                            } else {
-                              dispatch(
-                                enrollCourse({
-                                  userId: currentUser._id,
-                                  courseId: course._id,
-                                })
-                              );
-                            }
-                          }}
-                          style={{ marginLeft: "10px" }}
-                        >
-                          {isEnrolled(course._id) ? "Unenroll" : "Enroll"}
-                        </button>
-                      </div>
+                      <Card.Title className="wd-dashboard-course-title text-nowrap overflow-hidden">
+                        {course.name}
+                      </Card.Title>
 
                       <Card.Text
                         className="wd-dashboard-course-description overflow-hidden"
