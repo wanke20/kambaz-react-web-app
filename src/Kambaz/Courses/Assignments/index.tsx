@@ -12,45 +12,6 @@ export default function Assignments() {
   const dispatch = useDispatch();
   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
 
-  // const [editingId, setEditingId] = useState<string | null>(null);
-
-  // const handleClose = () => {
-  //   setShow(false);
-  //   setTitle("");
-  //   setEditing(false);
-  //   setEditingId(null);
-  // };
-
-  // const handleSaveAssignment = () => {
-  //   const newAssignment = {
-  //     title: title,
-  //     description: description,
-  //     points: points,
-  //     dueDate: dueDate,
-  //     availableDate: availableDate,
-  //     availableUntil: availableUntil,
-  //     course: cid,
-  //   };
-
-  //   if (editing && editingId) {
-  //     const existingAssignment = assignments.find(
-  //       (a: any) => a._id === editingId
-  //     );
-  //     if (existingAssignment) {
-  //       dispatch(
-  //         updateAssignment({
-  //           ...existingAssignment,
-  //           ...newAssignment,
-  //         })
-  //       );
-  //     }
-  //   } else {
-  //     dispatch(addAssignment(newAssignment));
-  //   }
-
-  //   handleClose();
-  // };
-
   return (
     <div id="wd-assignments">
       <Row className="mb-4 w-100">
@@ -72,16 +33,6 @@ export default function Assignments() {
           <Link to={`/Kambaz/Courses/${cid}/Assignments/new`} style={{ textDecoration: "none" }}>
             <Button
               variant="danger"
-              // onClick={() => {
-                // setEditing(false);
-                // setTitle("");
-                // setDescription("");
-                // setDueDate(new Date().toISOString().slice(0, 16));
-                // setAvailableDate(new Date().toISOString().slice(0, 16));
-                // setPoints(100);
-                // setAvailableUntil(new Date().toISOString().slice(0, 16));
-                // setShow(true);
-              // }}
             >
               <FaPlus
                 className="position-relative me-2"
@@ -92,25 +43,6 @@ export default function Assignments() {
           </Link>
         </Col>
       </Row>
-
-      {/* <AssignmentEditor
-        show={show}
-        handleClose={handleClose}
-        editing={editing}
-        title={title}
-        setTitle={setTitle}
-        description={description}
-        setDescription={setDescription}
-        points={points}
-        setPoints={setPoints}
-        dueDate={dueDate}
-        setDueDate={setDueDate}
-        availableDate={availableDate}
-        setAvailableDate={setAvailableDate}
-        availableUntil={availableUntil}
-        setAvailableUntil={setAvailableUntil}
-        addAssignment={handleSaveAssignment}
-      /> */}
 
       <ListGroup id="wd-assignment-lists" className="rounded-0">
         <ListGroup.Item className="wd-assignment-list p-0 mb-5 fs-5 border-gray">
@@ -147,23 +79,6 @@ export default function Assignments() {
                       >
                         {assignment.title}
                       </Link>
-                      {/* <Button
-                        variant="link"
-                        className="p-0 m-0 text-decoration-none fs-5 text-black text-start"
-                        onClick={() => {
-                          setEditing(true);
-                          // setEditingId(assignment._id);
-                          // setTitle(assignment.title);
-                          // setDescription(assignment.description);
-                          // setAvailableDate(assignment.availableDate);
-                          // setDueDate(assignment.dueDate);
-                          // setPoints(assignment.points);
-                          // setAvailableUntil(assignment.availableUntil);
-                          // setShow(true);
-                        }}
-                      >
-                        {assignment.title}
-                      </Button> */}
 
                       <div>
                         <span className="mb-1 fs-6 text-danger">
@@ -218,7 +133,6 @@ export default function Assignments() {
                   <div className="flex float-end align-items-center">
                     <FaTrash
                       className="mx-3 text text-danger"
-                      // size="sm"
                       onClick={() => dispatch(deleteAssignment(assignment._id))}
                     />
                     <FaCheckCircle className="text-success" />
