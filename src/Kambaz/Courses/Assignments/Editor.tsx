@@ -97,10 +97,10 @@ export default function AssignmentEditor({}: // show,
     <div
       id="wd-assignments-editor"
       className="p-4"
-      style={{ marginLeft: "70px" }}
+      // style={{ marginLeft: "70px" }}
     >
       <Form.Group className="mb-3" controlId="wd-name">
-        <Col xs={8}>
+        <Col xs={6}>
           <Form.Label>Assignment Name</Form.Label>
           <Form.Control
             value={title}
@@ -109,7 +109,7 @@ export default function AssignmentEditor({}: // show,
         </Col>
       </Form.Group>
       <Form.Group className="mb-3" controlId="wd-description">
-        <Col xs={8}>
+        <Col xs={6}>
           <Form.Control
             as="textarea"
             rows={3}
@@ -119,7 +119,7 @@ export default function AssignmentEditor({}: // show,
         </Col>
       </Form.Group>
       <Row className="mb-3">
-        <Col xs={8}>
+        <Col xs={6}>
           <Form.Label
             htmlFor="wd-points"
             className="d-flex justify-content-start"
@@ -134,7 +134,7 @@ export default function AssignmentEditor({}: // show,
         </Col>
       </Row>
       <Row className="mb-3">
-        <Col xs={8}>
+        <Col xs={6}>
           <Form.Label
             htmlFor="wd-due-date"
             className="d-flex justify-content-start"
@@ -150,7 +150,7 @@ export default function AssignmentEditor({}: // show,
         </Col>
       </Row>
       <Row className="mb-3">
-        <Col xs={8}>
+        <Col xs={6}>
           <Form.Label
             htmlFor="wd-available-from"
             className="d-flex justify-content-start"
@@ -166,7 +166,7 @@ export default function AssignmentEditor({}: // show,
         </Col>
       </Row>
       <Row className="mb-3">
-        <Col xs={8}>
+        <Col xs={6}>
           <Form.Label
             htmlFor="wd-available-until"
             className="d-flex justify-content-start"
@@ -184,7 +184,7 @@ export default function AssignmentEditor({}: // show,
 
       <hr />
       <Row>
-        <Col xs={{ span: 4, offset: 1 }} className="d-flex justify-content-end">
+        <Col xs={{ span: 4}} className="d-flex justify-content-end">
           <Link
             to={`/Kambaz/Courses/${cid}/Assignments`}
             className="btn btn-secondary me-2"
