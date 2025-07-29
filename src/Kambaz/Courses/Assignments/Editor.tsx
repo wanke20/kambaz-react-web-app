@@ -5,40 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addAssignment, updateAssignment } from "./reducer";
 
-export default function AssignmentEditor({}: // show,
-// handleClose,
-// editing,
-// title,
-// setTitle,
-// description,
-// setDescription,
-// points,
-// setPoints,
-// dueDate,
-// setDueDate,
-// availableDate,
-// setAvailableDate,
-// availableUntil,
-// setAvailableUntil,
-// addAssignment,
-{
-  // show: boolean;
-  // handleClose: () => void;
-  // editing: boolean;
-  // title: string;
-  // setTitle: (name: string) => void;
-  // description: string;
-  // setDescription: (desc: string) => void;
-  // points: number;
-  // setPoints: (pts: number) => void;
-  // dueDate: string;
-  // setDueDate: (date: string) => void;
-  // availableDate: string;
-  // setAvailableDate: (date: string) => void;
-  // availableUntil: string;
-  // setAvailableUntil: (date: string) => void;
-  // addAssignment: () => void;
-}) {
+export default function AssignmentEditor() {
   const { cid, aid } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -97,7 +64,6 @@ export default function AssignmentEditor({}: // show,
     <div
       id="wd-assignments-editor"
       className="p-4"
-      // style={{ marginLeft: "70px" }}
     >
       <Form.Group className="mb-3" controlId="wd-name">
         <Col xs={6}>
