@@ -1,31 +1,55 @@
 import { Form, Col, Row } from "react-bootstrap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addAssignment, updateAssignment } from "./reducer";
+import * as assignmentsClient from "./client";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
-
-  const assignment = assignments.find(
-    (a: any) => a._id === aid && a.course === cid
-  );
+  // const fetchAssignments = async () => {
+  //   const assignments = await assignmentsClient.findAssignmentById(
+  //     aid as string
+  //   );
+  //   dispatch(setAssignments(assignments));
+  // };
+  const handleUpdateAssignment = async (assignment: any) => {
+    await assignmentsClient.updateAssignment(assignment._id, assignment);
+    dispatch(updateAssignment(assignment));
+  };
+  const addNewAssignment = async (assignment: any) => {
+    const newAssignment = await assignmentsClient.createAssignment(assignment);
+    dispatch(addAssignment(newAssignment));
+  };
   const editing = aid !== "new";
 
-  const [title, setTitle] = useState(assignment?.title || "");
-  const [description, setDescription] = useState(assignment?.description || "");
-  const [points, setPoints] = useState(assignment?.points || 100);
-  const [dueDate, setDueDate] = useState(assignment?.dueDate || "");
-  const [availableDate, setAvailableDate] = useState(
-    assignment?.availableDate || ""
-  );
-  const [availableUntil, setAvailableUntil] = useState(
-    assignment?.availableUntil || ""
-  );
+  const [assignment, setAssignment] = useState<any>(null);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [points, setPoints] = useState(100);
+  const [dueDate, setDueDate] = useState("");
+  const [availableDate, setAvailableDate] = useState("");
+  const [availableUntil, setAvailableUntil] = useState("");
+
+  useEffect(() => {
+    const fetchAssignment = async () => {
+      if (editing) {
+        const data = await assignmentsClient.findAssignmentById(aid as string);
+        setAssignment(data);
+        setTitle(data?.title || "");
+        setDescription(data?.description || "");
+        setPoints(data?.points || 100);
+        setDueDate(data?.dueDate || "");
+        setAvailableDate(data?.availableDate || "");
+        setAvailableUntil(data?.availableUntil || "");
+      }
+    };
+    fetchAssignment();
+  }, [aid, editing]);
 
   if (!assignment && editing) {
     return <div className="p-4">Assignment not found.</div>;
@@ -46,25 +70,20 @@ export default function AssignmentEditor() {
         (a: any) => a._id === assignment._id
       );
       if (existingAssignment) {
-        dispatch(
-          updateAssignment({
-            ...existingAssignment,
-            ...newAssignment,
-          })
-        );
+        handleUpdateAssignment({
+          ...existingAssignment,
+          ...newAssignment,
+        });
       }
     } else {
-      dispatch(addAssignment(newAssignment));
+      addNewAssignment(newAssignment);
     }
 
     navigate(`/Kambaz/Courses/${cid}/Assignments`);
   };
 
   return (
-    <div
-      id="wd-assignments-editor"
-      className="p-4"
-    >
+    <div id="wd-assignments-editor" className="p-4">
       <Form.Group className="mb-3" controlId="wd-name">
         <Col xs={6}>
           <Form.Label>Assignment Name</Form.Label>
@@ -150,7 +169,7 @@ export default function AssignmentEditor() {
 
       <hr />
       <Row>
-        <Col xs={{ span: 4}} className="d-flex justify-content-end">
+        <Col xs={{ span: 4 }} className="d-flex justify-content-end">
           <Link
             to={`/Kambaz/Courses/${cid}/Assignments`}
             className="btn btn-secondary me-2"

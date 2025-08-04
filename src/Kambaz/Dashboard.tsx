@@ -7,6 +7,10 @@ import {
   toggleViewAllCourses,
 } from "./enrollmentReducer";
 import { RootState } from "./store";
+import { useEffect } from "react";
+import { setEnrollments } from "./enrollmentReducer";
+import * as coursesClient from "./Courses/client";
+import * as userClient from "./Account/client";
 
 export default function Dashboard({
   courses,
@@ -29,12 +33,41 @@ export default function Dashboard({
   const showAllCourses = useSelector(
     (state: RootState) => state.enrollmentReducer.showAllCourses
   );
+  const fetchEnrollments = async () => {
+    try {
+      const enrollments = await userClient.findCoursesForEnrolledUser(
+        currentUser._id
+      );
+      dispatch(setEnrollments(enrollments));
+    } catch (error) {
+      console.error("Failed to fetch enrollments", error);
+    }
+  };
   const isEnrolled = (courseId: string) =>
-    enrollments.some(
-      (e: { user: string; course: string }) =>
-        e.user === currentUser._id && e.course === courseId
-    );
+    enrollments.some((e: any) => e._id === courseId);
   const isFaculty = () => currentUser?.role === "FACULTY";
+  const enrollCourseHandler = async (courseId: string) => {
+    await coursesClient.enrollUserInCourse(currentUser._id, courseId);
+    dispatch(
+      enrollCourse({
+        userId: currentUser._id,
+        courseId: courseId,
+      })
+    );
+  };
+  const unenrollCourseHandler = async (courseId: string) => {
+    await coursesClient.unenrollUserFromCourse(currentUser._id, courseId);
+    dispatch(
+      unenrollCourse({
+        userId: currentUser._id,
+        courseId: courseId,
+      })
+    );
+  };
+
+  useEffect(() => {
+    fetchEnrollments();
+  }, [enrollments]);
 
   return (
     <div id="wd-dashboard">
@@ -94,10 +127,7 @@ export default function Dashboard({
             .filter((course) =>
               showAllCourses
                 ? true
-                : enrollments.some(
-                    (e: { user: any; course: any }) =>
-                      e.user === currentUser._id && e.course === course._id
-                  )
+                : enrollments.some((e: any) => e._id === course._id)
             )
             .map((course: any) => (
               <Col className="wd-dashboard-course" style={{ width: "300px" }}>
@@ -120,19 +150,9 @@ export default function Dashboard({
                         onClick={(e) => {
                           e.preventDefault();
                           if (isEnrolled(course._id)) {
-                            dispatch(
-                              unenrollCourse({
-                                userId: currentUser._id,
-                                courseId: course._id,
-                              })
-                            );
+                            unenrollCourseHandler(course._id);
                           } else {
-                            dispatch(
-                              enrollCourse({
-                                userId: currentUser._id,
-                                courseId: course._id,
-                              })
-                            );
+                            enrollCourseHandler(course._id);
                           }
                         }}
                         style={{

@@ -4,13 +4,30 @@ import { GiNotebook } from "react-icons/gi";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { FaCaretDown, FaCheckCircle, FaPlus, FaTrash } from "react-icons/fa";
 import { Link, useParams } from "react-router";
-import { deleteAssignment } from "./reducer";
+import {
+  deleteAssignment,
+  setAssignments,
+} from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
+import * as coursesClient from "../client";
+import * as assignmentsClient from "./client";
+import { useEffect } from "react";
 
 export default function Assignments() {
   const { cid } = useParams();
   const dispatch = useDispatch();
   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+  const fetchAssignments = async () => {
+    const assignments = await coursesClient.findAssignmentsForCourse(cid as string);
+    dispatch(setAssignments(assignments));
+  };
+  const removeModule = async (moduleId: string) => {
+    await assignmentsClient.deleteAssignment(moduleId);
+    dispatch(deleteAssignment(moduleId));
+  };
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
 
   return (
     <div id="wd-assignments">
@@ -30,10 +47,11 @@ export default function Assignments() {
           >
             + Group
           </button>
-          <Link to={`/Kambaz/Courses/${cid}/Assignments/new`} style={{ textDecoration: "none" }}>
-            <Button
-              variant="danger"
-            >
+          <Link
+            to={`/Kambaz/Courses/${cid}/Assignments/new`}
+            style={{ textDecoration: "none" }}
+          >
+            <Button variant="danger">
               <FaPlus
                 className="position-relative me-2"
                 style={{ bottom: "1px" }}
@@ -133,7 +151,7 @@ export default function Assignments() {
                   <div className="flex float-end align-items-center">
                     <FaTrash
                       className="mx-3 text text-danger"
-                      onClick={() => dispatch(deleteAssignment(assignment._id))}
+                      onClick={() => removeModule(assignment._id)}
                     />
                     <FaCheckCircle className="text-success" />
                     <IoEllipsisVertical className="fs-3" />

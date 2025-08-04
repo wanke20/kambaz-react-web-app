@@ -13,10 +13,7 @@ export default function PrivateCourseRoute({
   const { enrollments } = useSelector((state: any) => state.enrollmentReducer);
 
   const isEnrolled = (courseId: string) =>
-    enrollments.some(
-      (e: { user: string; course: string }) =>
-        e.user === currentUser._id && e.course === courseId
-    );
+    enrollments.some((e: any) => e._id === courseId);
 
   if (!currentUser || !cid || !isEnrolled(cid)) {
     return <Navigate to="/Kambaz/Dashboard" />;
