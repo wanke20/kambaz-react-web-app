@@ -7,6 +7,7 @@ import WorkingWithStrings from "./WorkingWithStrings";
 import WorkingWithArrays from "./WorkingWithArrays";
 import WorkingWithObjectsAsynchronously from "./WorkingWithObjectsAsynchronously";
 import WorkingWithArraysAsynchronously from "./WorkingWithArraysAsynchronously";
+import PathParameters from "./PathParameters";
 const REMOTE_SERVER = import.meta.env.VITE_REMOTE_SERVER;
 export default function Lab5() {
   return (
@@ -19,6 +20,7 @@ export default function Lab5() {
       </div>
       <hr />
       <EnvironmentVariables />
+      <PathParameters />
       <QueryParameters />
       <WorkingWithObjects />
       <WorkingWithStrings />

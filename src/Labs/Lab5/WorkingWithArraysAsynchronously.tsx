@@ -117,23 +117,14 @@ export default function WorkingWithArraysAsynchronously() {
             ) : (
               <FormControl
                 className="w-50 float-start"
-                value={editingValues[todo.id] || ""}
-                onChange={(e) =>
-                  setEditingValues((prev) => ({
-                    ...prev,
-                    [todo.id]: e.target.value,
-                  }))
-                }
+                defaultValue={todo.title}
                 onKeyDown={(e) => {
+                  console.log("Key pressed:", e.key);
                   if (e.key === "Enter") {
-                    updateTodo({
-                      ...todo,
-                      title: editingValues[todo.id],
-                      completed: todo.completed,
-                    });
+                    updateTodo({ ...todo, editing: false });
                   }
                 }}
-                autoFocus
+                onChange={(e) => updateTodo({ ...todo, title: e.target.value })}
               />
             )}
           </ListGroup.Item>
