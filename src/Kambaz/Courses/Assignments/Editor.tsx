@@ -1,122 +1,161 @@
+import { Form, Col, Row } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addAssignment, updateAssignment } from "./reducer";
+import * as assignmentsClient from "./client";
+
 export default function AssignmentEditor() {
+  const { cid, aid } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const editing = aid !== "new";
+
+  const [assignment, setAssignment] = useState<any>(null);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [points, setPoints] = useState(100);
+  const [dueDate, setDueDate] = useState("");
+  const [availableDate, setAvailableDate] = useState("");
+  const [availableUntil, setAvailableUntil] = useState("");
+
+  const handleUpdateAssignment = async (assignment: any) => {
+    const updated = await assignmentsClient.updateAssignment(assignment._id, assignment);
+    dispatch(updateAssignment(updated));
+  };
+
+  const addNewAssignment = async (assignment: any) => {
+    const newAssignment = await assignmentsClient.createAssignment(assignment);
+    dispatch(addAssignment(newAssignment));
+  };
+
+  const fetchAssignment = async () => {
+    if (editing && aid) {
+      const data = await assignmentsClient.findAssignmentById(aid);
+      setAssignment(data);
+      setTitle(data?.title || "");
+      setDescription(data?.description || "");
+      setPoints(data?.points || 100);
+      setDueDate(data?.dueDate || "");
+      setAvailableDate(data?.availableDate || "");
+      setAvailableUntil(data?.availableUntil || "");
+    } else {
+      const now = new Date().toISOString().slice(0, 16);
+      setDueDate(now);
+      setAvailableDate(now);
+      setAvailableUntil(now);
+    }
+  };
+
+  const handleSaveAssignment = async () => {
+    const newAssignment = {
+      title,
+      description,
+      points,
+      dueDate,
+      availableDate,
+      availableUntil,
+      course: cid,
+    };
+
+    if (editing && assignment?._id) {
+      await handleUpdateAssignment({ ...assignment, ...newAssignment });
+    } else {
+      await addNewAssignment(newAssignment);
+    }
+
+    navigate(`/Kambaz/Courses/${cid}/Assignments`);
+  };
+
+  useEffect(() => {
+    fetchAssignment();
+  }, [aid]);
+
+  if (editing && !assignment) {
+    return <div className="p-4">Assignment not found.</div>;
+  }
+
   return (
-    <div id="wd-assignments-editor">
-      <label htmlFor="wd-name">Assignment Name</label>
-      <input id="wd-name" defaultValue="A1 - ENV + HTML" />
-      <br />
-      <br />
-      <textarea id="wd-description" defaultValue="Input instructions" />
-      <br /> <br />
-      <table>
-        <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-points">Points</label>
-          </td>
-          <td>
-            <input id="wd-points" type="number" defaultValue={100} />
-          </td>
-        </tr>{" "}
-        <br />
-        {/* Complete on your own */}
-        <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-group">Assignment Group: </label>
-          </td>
-          <td>
-            <select id="wd-group">
-              <option value="ASSIGNMENTS">ASSIGNMENTS</option>
-              <option value="QUIZZES">QUIZZES</option>
-            </select>
-          </td>
-        </tr>{" "}
-        <br />
-        <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-display-grade-as">Display Grade as: </label>
-          </td>
-          <td>
-            <select id="wd-display-grade-as">
-              <option value="PERCENTAGE">Percentage</option>
-              <option value="POINTS">Points</option>
-            </select>
-          </td>
-        </tr>
-        <br />
-        <tr>
-          <td align="right" valign="top">
-            <label htmlFor="wd-submission-type">Submission Type: </label>
-          </td>
-          <td>
-            <select id="wd-submission-type">
-              <option value="ONLINE">Online</option>
-              <option value="OTHER">Other</option>
-            </select>
-          </td>
-        </tr>
-        <br />
-        <tr>
-          <td></td>
-          <td align="left" valign="top">
-            <label>Online Entry Options</label>
-            <br />
-            <input type="checkbox" id="wd-text-entry" />
-            <label htmlFor="wd-text-entry">Text Entry</label>
-            <br />
-            <input type="checkbox" name="check-genre" id="wd-website-url" />
-            <label htmlFor="wd-website-url">Website URL</label>
-            <br />
-            <input
-              type="checkbox"
-              name="check-genre"
-              id="wd-media-recordings"
-            />
-            <label htmlFor="wd-media-recordings">Media Recordings</label>
-            <br />
-            <input
-              type="checkbox"
-              name="check-genre"
-              id="wd-student-annotation"
-            />
-            <label htmlFor="wd-student-annotation">Student Annotation</label>
-            <br />
-            <input type="checkbox" name="check-genre" id="wd-file-upload" />
-            <label htmlFor="wd-file-upload">File Uploads</label>
-          </td>
-        </tr>
-        <br />
-        <tr>
-          <td align="right" valign="top">
-            <label>Assign</label>
-          </td>
-          <td>
-            <label htmlFor="wd-assign-to">Assign to: </label>
-            <br />
-            <input id="wd-points" defaultValue="Everyone" />
-          </td>
-        </tr>
-        <br />
-        <tr>
-          <td></td>
-          <td>
-            <label htmlFor="wd-due-date"> Due: </label> <br />
-            <input type="date" defaultValue="2024-05-13" id="wd-due-date" />
-          </td>
-        </tr>
-        <br />
-        <tr>
-          <td></td>
-          <td>
-            <label>Available from</label>
-            <br />
-            <input type="date" defaultValue="2024-05-01" id="wd-available-from" />
-          </td>
-          <td>
-            <label>Until</label>
-            <br />
-            <input type="date" defaultValue="2024-05-20" id="wd-available-from" />
-          </td>
-        </tr>
-      </table>
+    <div id="wd-assignments-editor" className="p-4">
+      <Form.Group className="mb-3" controlId="wd-name">
+        <Col xs={6}>
+          <Form.Label>Assignment Name</Form.Label>
+          <Form.Control value={title} onChange={(e) => setTitle(e.target.value)} />
+        </Col>
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="wd-description">
+        <Col xs={6}>
+          <Form.Control
+            as="textarea"
+            rows={3}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </Col>
+      </Form.Group>
+      <Row className="mb-3">
+        <Col xs={6}>
+          <Form.Label htmlFor="wd-points" className="d-flex justify-content-start">
+            Points
+          </Form.Label>
+          <Form.Control
+            type="number"
+            value={points}
+            onChange={(e) => setPoints(Number(e.target.value))}
+          />
+        </Col>
+      </Row>
+      <Row className="mb-3">
+        <Col xs={6}>
+          <Form.Label htmlFor="wd-due-date" className="d-flex justify-content-start">
+            Due:
+          </Form.Label>
+          <Form.Control
+            type="datetime-local"
+            id="wd-due-date"
+            value={dueDate}
+            onChange={(e) => setDueDate(e.target.value)}
+          />
+        </Col>
+      </Row>
+      <Row className="mb-3">
+        <Col xs={6}>
+          <Form.Label htmlFor="wd-available-from" className="d-flex justify-content-start">
+            Available from
+          </Form.Label>
+          <Form.Control
+            type="datetime-local"
+            id="wd-available-from"
+            value={availableDate}
+            onChange={(e) => setAvailableDate(e.target.value)}
+          />
+        </Col>
+      </Row>
+      <Row className="mb-3">
+        <Col xs={6}>
+          <Form.Label htmlFor="wd-available-until" className="d-flex justify-content-start">
+            Until
+          </Form.Label>
+          <Form.Control
+            type="datetime-local"
+            id="wd-available-until"
+            value={availableUntil}
+            onChange={(e) => setAvailableUntil(e.target.value)}
+          />
+        </Col>
+      </Row>
+
+      <hr />
+      <Row>
+        <Col xs={{ span: 4 }} className="d-flex justify-content-end">
+          <Link to={`/Kambaz/Courses/${cid}/Assignments`} className="btn btn-secondary me-2">
+            Cancel
+          </Link>
+          <button onClick={handleSaveAssignment} className="btn btn-danger">
+            Save
+          </button>
+        </Col>
+      </Row>
     </div>
   );
 }
