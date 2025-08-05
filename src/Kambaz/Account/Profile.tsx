@@ -10,11 +10,18 @@ export default function Profile() {
   const navigate = useNavigate();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const updateProfile = async () => {
-    const updatedProfile = await client.updateUser(profile);
+    let updatedProfile;
+    if (!profile._id) {
+      updatedProfile = await client.createUser(profile);
+    } else {
+      updatedProfile = await client.updateUser(profile);
+    }
     dispatch(setCurrentUser(updatedProfile));
+    navigate("/Kambaz/Dashboard");
   };
   const fetchProfile = () => {
     if (!currentUser) return navigate("/Kambaz/Account/Signin");
+    console.log("Fetching profile for user:", currentUser);
     setProfile(currentUser);
   };
   const signout = async () => {
@@ -32,6 +39,7 @@ export default function Profile() {
         <div>
           <FormControl
             defaultValue={profile.username}
+            placeholder="username"
             id="wd-username"
             className="mb-2"
             onChange={(e) =>
@@ -40,6 +48,7 @@ export default function Profile() {
           />
           <FormControl
             defaultValue={profile.password}
+            placeholder="password"
             id="wd-password"
             className="mb-2"
             onChange={(e) =>
@@ -48,6 +57,7 @@ export default function Profile() {
           />
           <FormControl
             defaultValue={profile.firstName}
+            placeholder="first name"
             id="wd-firstname"
             className="mb-2"
             onChange={(e) =>
@@ -56,6 +66,7 @@ export default function Profile() {
           />
           <FormControl
             defaultValue={profile.lastName}
+            placeholder="last name"
             id="wd-lastname"
             className="mb-2"
             onChange={(e) =>
@@ -63,7 +74,7 @@ export default function Profile() {
             }
           />
           <FormControl
-            defaultValue={profile.dob}
+            defaultValue={profile.dob || new Date().toISOString().split("T")[0]}
             id="wd-dob"
             className="mb-2"
             onChange={(e) => setProfile({ ...profile, dob: e.target.value })}
@@ -71,6 +82,7 @@ export default function Profile() {
           />
           <FormControl
             defaultValue={profile.email}
+            placeholder="email"
             id="wd-email"
             className="mb-2"
             onChange={(e) => setProfile({ ...profile, email: e.target.value })}
@@ -80,9 +92,9 @@ export default function Profile() {
             className="form-control mb-2"
             id="wd-role"
           >
-            <option value="USER">User</option>{" "}
+            <option value="USER">User</option>
             <option value="ADMIN">Admin</option>
-            <option value="FACULTY">Faculty</option>{" "}
+            <option value="FACULTY">Faculty</option>
             <option value="STUDENT">Student</option>
           </select>
           <button
