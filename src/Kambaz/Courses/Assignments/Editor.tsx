@@ -1,7 +1,7 @@
 import { Form, Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addAssignment, updateAssignment } from "./reducer";
 import * as assignmentsClient from "./client";
 
@@ -9,7 +9,6 @@ export default function AssignmentEditor() {
   const { cid, aid } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const { assignments } = useSelector((state: any) => state.assignmentsReducer);
   const editing = aid !== "new";
 
   const [assignment, setAssignment] = useState<any>(null);

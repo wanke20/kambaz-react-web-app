@@ -6,9 +6,6 @@ import { FaPencil } from "react-icons/fa6";
 import { FaTrash, FaPlusCircle } from "react-icons/fa";
 export default function WorkingWithArraysAsynchronously() {
   const [todos, setTodos] = useState<any[]>([]);
-  const [editingValues, setEditingValues] = useState<{ [id: string]: string }>(
-    {}
-  );
   const [errorMessage, setErrorMessage] = useState(null);
   const updateTodo = async (todo: any) => {
     try {
@@ -23,7 +20,6 @@ export default function WorkingWithArraysAsynchronously() {
       t.id === todo.id ? { ...todo, editing: true } : t
     );
     setTodos(updatedTodos);
-    setEditingValues((prev) => ({ ...prev, [todo.id]: todo.title }));
   };
   const createTodo = async () => {
     const todos = await client.createTodo();
