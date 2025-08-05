@@ -68,6 +68,7 @@ export default function Modules() {
                   }
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
+                      // console.log("Saving module:", module);
                       saveModule({ ...module, editing: false });
                     }
                   }}
