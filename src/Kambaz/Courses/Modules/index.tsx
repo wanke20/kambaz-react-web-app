@@ -13,7 +13,7 @@ import {
   deleteModule,
 } from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
-import * as coursesClient from "../client";
+import * as courseClient from "../client";
 import * as modulesClient from "./client";
 
 export default function Modules() {
@@ -21,34 +21,36 @@ export default function Modules() {
   const [moduleName, setModuleName] = useState("");
   const { modules } = useSelector((state: any) => state.modulesReducer);
   const dispatch = useDispatch();
-  const fetchModules = async () => {
-    const modules = await coursesClient.findModulesForCourse(cid as string);
+  const fetchModulesForCourse = async () => {
+    const modules = await courseClient.findModulesForCourse(cid!);
     dispatch(setModules(modules));
   };
-  const createModuleForCourse = async () => {
-    if (!cid) return;
-    const newModule = { name: moduleName, course: cid };
-    const module = await coursesClient.createModuleForCourse(cid, newModule);
-    dispatch(addModule(module));
+  const addModuleHandler = async () => {
+    const newModule = await courseClient.createModuleForCourse(cid!, {
+      name: moduleName,
+      course: cid,
+    });
+    dispatch(addModule(newModule));
+    setModuleName("");
   };
-  const removeModule = async (moduleId: string) => {
+  const deleteModuleHandler = async (moduleId: string) => {
     await modulesClient.deleteModule(moduleId);
     dispatch(deleteModule(moduleId));
   };
-  const saveModule = async (module: any) => {
+  const updateModuleHandler = async (module: any) => {
     await modulesClient.updateModule(module);
     dispatch(updateModule(module));
   };
   useEffect(() => {
-    fetchModules();
-  }, []);
+    fetchModulesForCourse();
+  }, [cid]);
 
   return (
     <div>
       <ModulesControls
-        setModuleName={setModuleName}
+        addModule={addModuleHandler}
         moduleName={moduleName}
-        addModule={createModuleForCourse}
+        setModuleName={setModuleName}
       />
       <br />
       <br />
@@ -64,11 +66,11 @@ export default function Modules() {
                 <Form.Control
                   className="w-50 d-inline-block"
                   onChange={(e) =>
-                    dispatch(updateModule({ ...module, name: e.target.value }))
+                    updateModuleHandler({ ...module, name: e.target.value })
                   }
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
-                      saveModule({ ...module, editing: false });
+                      updateModuleHandler({ ...module, editing: false });
                     }
                   }}
                   defaultValue={module.name}
@@ -76,7 +78,7 @@ export default function Modules() {
               )}
               <ModuleControlButtons
                 moduleId={module._id}
-                deleteModule={(moduleId) => removeModule(moduleId)}
+                deleteModule={(moduleId) => deleteModuleHandler(moduleId)}
                 editModule={(moduleId) => dispatch(editModule(moduleId))}
               />
             </div>
