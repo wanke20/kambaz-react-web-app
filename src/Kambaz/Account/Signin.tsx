@@ -1,5 +1,5 @@
 import { Button, FormControl } from "react-bootstrap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { setCurrentUser } from "./reducer";
 import { useDispatch } from "react-redux";
@@ -13,8 +13,21 @@ export default function Signin() {
     const user = await client.signin(credentials);
     if (!user) return;
     dispatch(setCurrentUser(user));
+    localStorage.setItem("currentUser", JSON.stringify(user));
     navigate("/Kambaz/Dashboard");
   };
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const currentUser = await client.profile();
+        dispatch(setCurrentUser(currentUser));
+      } catch (err: any) {
+        console.error(err);
+      }
+    };
+    fetchProfile();
+  }, []);
 
   return (
     <div id="wd-signin-screen">

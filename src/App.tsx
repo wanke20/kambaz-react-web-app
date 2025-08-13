@@ -3,11 +3,13 @@ import Kambaz from "./Kambaz";
 import { Route, Routes, Navigate, HashRouter } from "react-router-dom";
 import store from "./Kambaz/store";
 import { Provider } from "react-redux";
+import Session from "./Kambaz/Account/Session";
 
 function App() {
   return (
     <HashRouter>
       <Provider store={store}>
+        <Session>
         <div>
           <Routes>
             <Route path="/" element={<Navigate to="/Labs" />} />
@@ -15,6 +17,7 @@ function App() {
             <Route path="/Kambaz/*" element={<Kambaz />} />
           </Routes>
         </div>
+        </Session>
       </Provider>
     </HashRouter>
   );

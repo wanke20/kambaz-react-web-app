@@ -28,7 +28,7 @@ export default function Dashboard({
 }) {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  const { enrollments } = useSelector((state: any) => state.enrollmentReducer);
+  // const { enrollments } = useSelector((state: any) => state.enrollmentReducer);
 
   const fetchEnrollments = async () => {
     try {
@@ -42,7 +42,7 @@ export default function Dashboard({
 
   useEffect(() => {
     fetchEnrollments();
-  }, [enrollments]);
+  }, []);
 
   return (
     <div id="wd-dashboard">
@@ -98,11 +98,6 @@ export default function Dashboard({
       <div id="wd-dashboard-courses">
         <Row xs={1} md={5} className="g-4">
           {courses
-            // .filter((course) =>
-            //   showAllCourses
-            //     ? true
-            //     : enrollments.some((e: any) => e._id === course._id)
-            // )
             .map((course: any) => (
               <Col className="wd-dashboard-course" style={{ width: "300px" }}>
                 <Card>

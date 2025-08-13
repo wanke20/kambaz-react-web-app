@@ -8,12 +8,11 @@ import ProtectedRoute from "./Account/ProtectedRoute";
 import Account from "./Account";
 import { useSelector } from "react-redux";
 import PrivateCourseRoute from "./PrivateCourseRoute";
-import Session from "./Account/Session";
 import * as userClient from "./Account/client";
 import * as courseClient from "./Courses/client";
+// import { setCurrentUser } from "./Account/reducer";
 
 export default function Kambaz() {
-  // const dispatch = useDispatch();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const [courses, setCourses] = useState<any[]>([]);
   const [enrolling, setEnrolling] = useState<boolean>(false);
@@ -84,7 +83,7 @@ export default function Kambaz() {
     } else {
       findCoursesForUser();
     }
-  }, [currentUser, enrolling]);
+  }, [enrolling]);
 
   const [course, setCourse] = useState<any>({
     _id: "1234",
@@ -98,7 +97,6 @@ export default function Kambaz() {
   });
 
   return (
-    <Session>
       <div id="wd-kambaz">
         <KambazNavigation />
         <div className="wd-main-content-offset p-3">
@@ -136,6 +134,5 @@ export default function Kambaz() {
           </Routes>
         </div>
       </div>
-    </Session>
   );
 }
