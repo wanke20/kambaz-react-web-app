@@ -19,9 +19,10 @@ export default function Profile() {
     dispatch(setCurrentUser(updatedProfile));
     navigate("/Kambaz/Dashboard");
   };
-  const fetchProfile = () => {
+  const fetchProfile = async () => {
     if (!currentUser) return navigate("/Kambaz/Account/Signin");
-    setProfile(currentUser);
+    const updatedProfile = await client.profile();
+    setProfile(updatedProfile);
   };
   const signout = async () => {
     await client.signout();
@@ -73,7 +74,7 @@ export default function Profile() {
             }
           />
           <FormControl
-            defaultValue={profile.dob || new Date().toISOString().split("T")[0]}
+            defaultValue={profile.dob?.split("T")[0] || ""}
             id="wd-dob"
             className="mb-2"
             onChange={(e) => setProfile({ ...profile, dob: e.target.value })}
