@@ -83,7 +83,7 @@ export default function Kambaz() {
     } else {
       findCoursesForUser();
     }
-  }, [enrolling]);
+  }, [currentUser, enrolling]);
 
   const [course, setCourse] = useState<any>({
     _id: "1234",
